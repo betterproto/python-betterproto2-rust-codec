@@ -1,10 +1,8 @@
 use super::{error::InteropResult, BetterprotoMessageClass};
-use indoc::indoc;
 use pyo3::{
     intern,
-    sync::GILOnceCell,
-    types::{PyAnyMethods, PyBytes, PyModule},
-    Bound, FromPyObject, PyAny, PyObject, Python, ToPyObject,
+    types::{PyAnyMethods, PyBytes},
+    Bound, FromPyObject, PyAny, Python, ToPyObject,
 };
 
 #[derive(FromPyObject, Clone)]
@@ -25,27 +23,8 @@ impl<'py> BetterprotoMessage<'py> {
     }
 
     pub fn get_field(&self, field_name: &str) -> InteropResult<Option<Bound<'py, PyAny>>> {
-        let py = self.py();
-        static GETTER_CACHE: GILOnceCell<PyObject> = GILOnceCell::new();
-        let getter = GETTER_CACHE
-            .get_or_init(py, || {
-                PyModule::from_code_bound(
-                    py,
-                    indoc! {"
-                        def getter(msg, field_name):
-                            return msg.__getattribute__(field_name)
-                    "},
-                    "",
-                    "",
-                )
-                .expect("This is a valid Python module")
-                .getattr("getter")
-                .expect("Attribute exists")
-                .to_object(py)
-            })
-            .bind(py);
+        let res = self.0.clone().getattr(field_name).expect("Attribute exists").extract()?;
 
-        let res = getter.call1((self.0.clone(), field_name))?.extract()?;
         Ok(res)
     }
 
