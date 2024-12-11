@@ -219,10 +219,12 @@ impl MessageEncoder {
                 Chunk::from_encoder(tag, &value, enc::int32::encoded_len, enc::int32::encode)?
             }
             ProtoType::CustomMessage(cls) => {
-                let msg: BetterprotoMessage = value.extract()?;
-                if SKIP_DEFAULT && !msg.should_be_serialized()? {
+                if value.is_none() {
                     return Ok(());
                 }
+
+                let msg: BetterprotoMessage = value.extract()?;
+
                 Chunk::from_message(
                     tag,
                     MessageEncoder::from_betterproto_msg(msg, cls.descriptor(value.py())?.get())?,

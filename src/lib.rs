@@ -25,7 +25,7 @@ fn serialize<'py>(py: Python<'py>, msg: BetterprotoMessage) -> EncodeResult<Boun
 }
 
 #[pymodule]
-fn betterproto_rust_codec(m: &Bound<PyModule>) -> PyResult<()> {
+fn betterproto2_rust_codec(m: &Bound<PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(deserialize, m)?)?;
     m.add_function(wrap_pyfunction!(serialize, m)?)?;
     Ok(())
