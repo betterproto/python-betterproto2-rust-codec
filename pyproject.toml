@@ -7,17 +7,12 @@ name = "betterproto-rust-codec"
 description = "Fast conversion between betterproto messages and Protobuf wire format."
 requires-python = ">=3.7"
 authors = [{ name = "Erik Friese", email = "e.friese0@gmail.com" }]
-classifiers = [
-    "Programming Language :: Rust",
-    "Programming Language :: Python :: Implementation :: CPython",
-    "Programming Language :: Python :: Implementation :: PyPy",
-]
 license = "MIT"
 readme = "README.md"
 
 [project.urls]
-homepage = "https://github.com/124C41p/betterproto-rust-codec"
-repository = "https://github.com/124C41p/betterproto-rust-codec"
+homepage = "https://github.com/betterproto/python-betterproto2-rust-codec"
+repository = "https://github.com/betterproto/python-betterproto2-rust-codec"
 
 
 [tool.maturin]
