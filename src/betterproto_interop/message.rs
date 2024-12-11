@@ -32,13 +32,8 @@ impl<'py> BetterprotoMessage<'py> {
                 PyModule::from_code_bound(
                     py,
                     indoc! {"
-                        from betterproto import PLACEHOLDER
-
                         def getter(msg, field_name):
-                            value = msg._Message__raw_get(field_name)
-                            if value is PLACEHOLDER:
-                                return
-                            return value
+                            return msg.__getattribute__(field_name)
                     "},
                     "",
                     "",
@@ -70,20 +65,6 @@ impl<'py> BetterprotoMessage<'py> {
             .0
             .getattr(intern!(self.py(), "_unknown_fields"))?
             .extract()?)
-    }
-
-    pub fn set_deserialized(&self) -> InteropResult<()> {
-        self.0
-            .setattr(intern!(self.py(), "_serialized_on_wire"), true)?;
-        Ok(())
-    }
-
-    pub fn should_be_serialized(&self) -> InteropResult<bool> {
-        let res = self
-            .0
-            .getattr(intern!(self.py(), "_serialized_on_wire"))?
-            .extract()?;
-        Ok(res)
     }
 }
 
