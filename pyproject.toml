@@ -6,7 +6,10 @@ build-backend = "maturin"
 name = "python-betterproto2-rust-codec"
 description = "Fast conversion between betterproto messages and Protobuf wire format."
 requires-python = ">=3.7"
-authors = [{ name = "Erik Friese", email = "e.friese0@gmail.com" }]
+authors = [
+    { name = "Erik Friese", email = "e.friese0@gmail.com" },
+    { name = "Adrien Vannson", email = "adrien.vannson@protonmail.com" }
+]
 license = "MIT"
 readme = "README.md"
 
