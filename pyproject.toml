@@ -3,7 +3,7 @@ requires = ["maturin>=1.2,<2.0"]
 build-backend = "maturin"
 
 [project]
-name = "python-betterproto2-rust-codec"
+name = "betterproto2-rust-codec"
 description = "Fast conversion between betterproto messages and Protobuf wire format."
 requires-python = ">=3.7"
 authors = [
