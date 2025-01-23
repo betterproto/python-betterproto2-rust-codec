@@ -11,6 +11,6 @@ crate-type = ["cdylib"]
 [dependencies]
 chrono = "0.4.37"
 indoc = "2.0.5"
-prost = { version = "0.12.3", features = ["no-recursion-limit"] }
+prost = { version = "0.13.4", features = ["no-recursion-limit"] }
 pyo3 = { version = "0.21.0", features = ["abi3-py37", "extension-module", "chrono"] }
-thiserror = "1.0.58"
+thiserror = "2.0.11"
