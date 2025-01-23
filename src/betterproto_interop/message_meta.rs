@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use pyo3::{
-    types::{PyAnyMethods, PyDict, PyDictMethods, PyList, PyType},
+    types::{PyAnyMethods, PyDict, PyDictMethods, PyType},
     Bound, FromPyObject, PyAny,
 };
 
@@ -22,11 +22,10 @@ pub struct BetterprotoMessageMeta<'py> {
 
 impl<'py> BetterprotoMessageMeta<'py> {
     pub fn is_list_field(&self, field_name: &str) -> InteropResult<bool> {
-        let cls = self
-            .default_gen
-            .get(field_name)
-            .ok_or(InteropError::IncompleteMetadata)?;
-        Ok(cls.is(&cls.py().get_type_bound::<PyList>()))
+        let meta = self.meta_by_field_name.call_method1("get", (field_name,))?;
+        let repeated = meta.getattr("repeated")?.extract::<bool>()?;
+
+        Ok(repeated)
     }
 
     pub fn get_class(&self, field_name: &str) -> InteropResult<&Bound<'py, PyType>> {
